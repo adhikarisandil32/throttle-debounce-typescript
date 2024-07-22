@@ -1,4 +1,4 @@
-const throttle = (cb: Function, delay: number) => {
+const throttle = (cb: Function, delay: number): Function => {
   let lastCall: number = 0
   let timeout: ReturnType<typeof setTimeout>
 
