@@ -1,14 +1,15 @@
-import React, { useEffect, useState } from "react"
+import React, { useCallback, useEffect, useState } from "react"
 import ShowData from "./ShowData"
+import { throttle } from "../utils/throttle"
 
 export default function ThrottleComponent() {
   const [data, setData] = useState<[]>([])
-  const [input, setInput] = useState<string>()
+  const [input, setInput] = useState<string>("")
 
-  useEffect(() => {
-    const getData = async () => {
+  const fetchDataFromApi = useCallback(
+    throttle(async (qry: string) => {
       try {
-        const response = await fetch("/api/products?limit=0")
+        const response = await fetch(`/api/products/search?q=${qry}`)
 
         if (!response.ok) {
           throw new Error("error fetching data")
@@ -21,9 +22,12 @@ export default function ThrottleComponent() {
       } catch (error) {
         console.log(error)
       }
-    }
+    }, 500),
+    [],
+  )
 
-    getData()
+  useEffect(() => {
+    fetchDataFromApi(input)
   }, [input])
 
   return (

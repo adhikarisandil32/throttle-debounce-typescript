@@ -1,14 +1,15 @@
-import React, { useState, useEffect, FormEvent } from "react"
+import React, { useState, useEffect, useCallback } from "react"
 import ShowData from "./ShowData"
+import { debounce } from "../utils/debounce"
 
 export default function DebounceComponent() {
   const [data, setData] = useState<[]>([])
-  const [input, setInput] = useState<string>()
+  const [input, setInput] = useState<string>("")
 
-  useEffect(() => {
-    const getData = async () => {
+  const fetchDataFromApi = useCallback(
+    debounce(async (qry: string) => {
       try {
-        const response = await fetch("/api/products?limit=0")
+        const response = await fetch(`/api/products/search?q=${qry}`)
 
         if (!response.ok) {
           throw new Error("error fetching data")
@@ -21,9 +22,12 @@ export default function DebounceComponent() {
       } catch (error) {
         console.log(error)
       }
-    }
+    }, 500),
+    [],
+  )
 
-    getData()
+  useEffect(() => {
+    fetchDataFromApi(input)
   }, [input])
 
   return (
