@@ -9,7 +9,7 @@ export default function ThrottleComponent() {
   const fetchDataFromApi = useCallback(
     throttle(async (qry: string) => {
       try {
-        const response = await fetch(`/api/products/search?q=${qry}`)
+        const response = await fetch(`/api/products/search?q=${qry}&limit=0`)
 
         if (!response.ok) {
           throw new Error("error fetching data")

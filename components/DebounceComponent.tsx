@@ -9,7 +9,7 @@ export default function DebounceComponent() {
   const fetchDataFromApi = useCallback(
     debounce(async (qry: string) => {
       try {
-        const response = await fetch(`/api/products/search?q=${qry}`)
+        const response = await fetch(`/api/products/search?q=${qry}&limit=0`)
 
         if (!response.ok) {
           throw new Error("error fetching data")
