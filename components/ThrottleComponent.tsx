@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react"
 import ShowData from "./ShowData"
 import { throttle } from "../utils/throttle"
+import { fetchApi } from "../utils/fetchApi"
 
 export default function ThrottleComponent() {
   const [data, setData] = useState<[]>([])
@@ -9,7 +10,7 @@ export default function ThrottleComponent() {
   const fetchDataFromApi = useCallback(
     throttle(async (qry: string) => {
       try {
-        const response = await fetch(`/api/products/search?q=${qry}&limit=0`)
+        const response = await fetchApi(`/products/search?q=${qry}&limit=0`)
 
         if (!response.ok) {
           throw new Error("error fetching data")

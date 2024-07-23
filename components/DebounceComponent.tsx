@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from "react"
 import ShowData from "./ShowData"
 import { debounce } from "../utils/debounce"
+import { fetchApi } from "../utils/fetchApi"
 
 export default function DebounceComponent() {
   const [data, setData] = useState<[]>([])
@@ -9,7 +10,7 @@ export default function DebounceComponent() {
   const fetchDataFromApi = useCallback(
     debounce(async (qry: string) => {
       try {
-        const response = await fetch(`/api/products/search?q=${qry}&limit=0`)
+        const response = await fetchApi(`/products/search?q=${qry}&limit=0`)
 
         if (!response.ok) {
           throw new Error("error fetching data")
