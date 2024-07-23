@@ -45,7 +45,7 @@ export default function ThrottleComponent() {
         />
       </div>
 
-      <div className="border-2 border-green-800">
+      <div>
         <ShowData data={data} />
       </div>
     </div>

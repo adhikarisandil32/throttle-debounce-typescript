@@ -45,7 +45,7 @@ export default function DebounceComponent() {
         />
       </div>
 
-      <div className="flex-1 border-2 border-red-800">
+      <div>
         <ShowData data={data} />
       </div>
     </div>
